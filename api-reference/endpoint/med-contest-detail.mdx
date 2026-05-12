@@ -1,0 +1,10 @@
+---
+title: 'Detalhar Disputa de MED'
+openapi: 'GET /med-contest/exposes/{medId}'
+---
+
+Retorna os detalhes da disputa, incluindo o documento de evidência codificado em base64 (quando já tiver sido enviado).
+
+<Tip>
+  Diferente do endpoint de listagem (que retorna apenas a URL armazenada em `content`), aqui o campo `MedContest.content` vem como **data URI em base64** — útil para reprocessar ou exibir o documento sem precisar baixá-lo separadamente.
+</Tip>

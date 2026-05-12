@@ -1,0 +1,34 @@
+---
+title: 'Enviar Evidência da Disputa'
+openapi: 'PATCH /med-contest/exposes/{medId}'
+---
+
+Envia o arquivo de evidência e a descrição da defesa para o `medId` indicado. Internamente, o gateway encaminha a defesa ao PSP upstream.
+
+<Note>
+  Pode ser chamado mais de uma vez para anexar evidências adicionais — a última prevalece no campo `content`.
+</Note>
+
+## Status final retornado
+
+O `status` na resposta indica o resultado imediato do envio:
+
+| Status              | Significado                                                                                          |
+| ------------------- | ---------------------------------------------------------------------------------------------------- |
+| `DEFENSE_SUBMITTED` | Defesa entregue ao PSP com sucesso (caminho feliz).                                                  |
+| `DEFENSE_FAILED`    | O PSP rejeitou o envio (erro de transporte/4xx). Detalhes em `last_error`. Pode chamar o PATCH novamente para tentar outra evidência. |
+| `REQUESTED`         | O PSP da transação ainda não tem caminho server-to-server suportado (hoje apenas **Woovi**). Nesses casos o time interno é notificado e acompanha manualmente. |
+
+## Exemplo cURL
+
+```bash
+curl -X PATCH "https://gateway.3xpay.co/med-contest/exposes/1024" \
+  -H "api_key: SUA_API_KEY" \
+  -H "api_secret: SEU_API_SECRET" \
+  -F "file=@/caminho/comprovante.pdf" \
+  -F "description=Comprovante de pagamento original emitido pelo nosso PSP."
+```
+
+<Warning>
+  O arquivo tem **tamanho máximo de 10 MB** e a descrição **até 2000 caracteres**. Ambos os campos são obrigatórios.
+</Warning>

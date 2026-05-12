@@ -1,0 +1,108 @@
+---
+title: 'Webhook de Devolução'
+description: 'Documentação completa das notificações do webhook para devoluções de transações'
+icon: 'webhook'
+---
+
+import { Steps } from 'nextra/components'
+
+# Documentação do Webhook de Devolução
+
+## Visão Geral
+Nosso sistema de webhook envia notificações em tempo real sobre o processamento de estornos (refunds). Quando um estorno é confirmado ou rejeitado, uma requisição POST é enviada para a `callback_url` da transação original com informações detalhadas do status do estorno.
+
+O estorno é processado de forma assíncrona. Após a requisição inicial retornar com status `IN_PROCESSING`, a confirmação ou rejeição será enviada via webhook para a URL configurada na transação original.
+
+## Payload do Webhook
+O webhook envia um payload JSON contendo os detalhes e status do estorno.
+
+### Descrição dos Campos
+
+#### Informações da Transação
+- `transactionId` (string): Identificador único da transação no formato UUID
+- `transactionStatus` (string): Status atual da transação. Valores possíveis:
+  - `REFUND`: Estorno confirmado com sucesso
+  - `REFUND_REJECTED`: Estorno rejeitado
+- `transactionType` (string): Tipo da transação original (CASH_IN ou CASH_OUT)
+- `value` (string): Valor da transação estornada
+- `externalId` (string): ID de referência externa fornecido pelo cliente na transação original
+- `e2e_id` (string, opcional): Identificador end-to-end da transação PIX (presente no refund confirmado)
+- `error_message` (string, opcional): Mensagem de erro quando o estorno é rejeitado (ex: "AC06 - Conta bloqueada do Pix")
+
+### Exemplos por Status
+
+#### Refund Confirmado
+
+Quando o estorno é processado com sucesso, o status da transação é alterado para `REFUND` e o webhook é enviado.
+
+```json
+{
+  "transactionId": "aafee9f5-94b3-4e3d-ab6a-416d0a1218cb",
+  "transactionStatus": "REFUND",
+  "transactionType": "CASH_OUT",
+  "value": "100.50",
+  "externalId": "ext-123",
+  "e2e_id": "E23114447202304181826HJNwY577YDX"
+}
+```
+
+#### Refund Rejeitado
+
+Quando o estorno é rejeitado, o status da transação original é mantido (não altera) e o webhook é enviado com `transactionStatus: "REFUND_REJECTED"` e o motivo da rejeição no campo `error_message`.
+
+```json
+{
+  "transactionId": "aafee9f5-94b3-4e3d-ab6a-416d0a1218cb",
+  "transactionStatus": "REFUND_REJECTED",
+  "transactionType": "CASH_OUT",
+  "value": "100.50",
+  "externalId": "ext-123",
+  "error_message": "AC06 - Conta bloqueada do Pix"
+}
+```
+
+## Códigos de Erro Comuns
+
+Quando um estorno é rejeitado, o campo `error_message` contém o código de erro e a descrição. Os códigos mais comuns são:
+
+- **AC06**: Conta bloqueada do Pix
+- **ED05**: Pagamento rejeitado pelo PSP do recebedor
+
+## Regras de Negócio
+
+<Steps>
+A transação original deve estar com status `PROCESSED` para poder ser estornada
+
+O processamento é assíncrono: a resposta inicial retorna `IN_PROCESSING`, e a confirmação é enviada via webhook
+
+Existe um cache de 2 horas que evita múltiplos refunds simultâneos para a mesma transação. Se o estorno for rejeitado, o cache é removido automaticamente, permitindo que uma nova tentativa seja feita
+
+O webhook é enviado para a `callback_url` configurada na transação original
+</Steps>
+
+## Boas Práticas
+
+<Steps>
+Confirme o recebimento do webhook com uma resposta 200 OK
+
+Implemente verificações de idempotência usando o `transactionId` e `externalId`
+
+Processe webhooks de forma assíncrona
+
+Mantenha logs dos webhooks recebidos para resolução de problemas
+
+Implemente lógica de retry para entregas de webhook falhas
+
+Trate adequadamente os casos de `REFUND_REJECTED` para permitir novas tentativas
+</Steps>
+
+## O Webhook deve retornar Status Code 200
+
+<Warning>
+  Para que o estorno tenha seu fluxo finalizado com sucesso é de extrema importância que seja retornado 200 na resposta!
+</Warning>
+
+
+export default function MDXPage({ children }) {
+  return <div className="docs-container">{children}</div>;
+}

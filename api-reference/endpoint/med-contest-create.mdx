@@ -1,0 +1,14 @@
+---
+title: 'Abrir Disputa de MED'
+openapi: 'POST /med-contest/exposes'
+---
+
+Cria o registro inicial da contestação para uma transação em estado de MED. Após esta chamada o status fica em `WAITING_CONTENT` aguardando o upload da evidência via `PATCH /med-contest/exposes/{medId}`.
+
+<Note>
+  O `id` retornado nesta resposta é o **medId** usado nos endpoints subsequentes (detalhe e envio de evidência).
+</Note>
+
+<Info>
+  **Importante:** o `transaction_id` aqui é o **UUID** recebido no webhook de infração (com `transactionStatus = "MED"`), **não** o ID numérico interno.
+</Info>

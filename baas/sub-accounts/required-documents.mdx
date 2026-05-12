@@ -1,0 +1,139 @@
+---
+title: Documentos Obrigatórios
+description: "Lista completa dos documentos obrigatórios para criação de subcontas"
+---
+
+## Documentos Obrigatórios
+
+Para criar uma subconta e iniciar o processo de abertura de conta completa, é necessário enviar os seguintes documentos obrigatórios:
+
+## 👤 Documentos Pessoais do Sócio
+
+### Opção 1: RG (Registro Geral)
+- **RG Frente**: Documento de identidade - lado da foto
+- **RG Verso**: Documento de identidade - lado dos dados
+
+### Opção 2: CNH (Carteira Nacional de Habilitação)
+- **CNH Frente**: Carteira de habilitação - lado da foto
+- **CNH Verso**: Carteira de habilitação - lado dos dados
+
+### Selfie do Sócio
+- **Selfie**: Foto atual do sócio para verificação facial
+- Deve ser uma foto clara e atual
+- Rosto deve estar bem visível
+- Não deve usar óculos escuros ou máscaras
+
+<Note>
+**Importante**: Você deve escolher entre RG ou CNH, não é necessário enviar ambos. Porém, a selfie é sempre obrigatória.
+</Note>
+
+## 🏢 Documentos da Empresa
+
+### Contrato Social
+- **Contrato Social**: Documento de constituição da empresa
+- Deve estar atualizado e legível
+- Formato PDF obrigatório
+- Máximo 10MB por arquivo
+
+## 📋 Resumo dos Documentos
+
+<CardGroup cols={2}>
+  <Card title="Documentos Pessoais" icon="user">
+    <ul>
+      <li>RG (frente e verso) <strong>OU</strong></li>
+      <li>CNH (frente e verso)</li>
+      <li>Selfie do sócio</li>
+    </ul>
+  </Card>
+  <Card title="Documentos Empresariais" icon="building">
+    <ul>
+      <li>Contrato Social</li>
+    </ul>
+  </Card>
+</CardGroup>
+
+## 📸 Especificações das Imagens
+
+### Qualidade das Imagens
+- **Resolução**: Mínimo 800x600 pixels
+- **Formato**: JPG, PNG ou PDF
+- **Tamanho**: Máximo 10MB por arquivo
+- **Qualidade**: Imagens devem estar nítidas e legíveis
+
+### Requisitos para Selfie
+- **Iluminação**: Boa iluminação natural ou artificial
+- **Enquadramento**: Rosto centralizado na imagem
+- **Expressão**: Expressão neutra, olhando para a câmera
+- **Acessórios**: Evitar óculos escuros, bonés ou máscaras
+
+## 🔄 Fluxo de Upload
+
+<Steps>
+  <Step title="1. Documentos Pessoais">
+    Faça upload dos documentos pessoais usando `POST /sub-accounts/document`
+  </Step>
+  <Step title="2. Documentos Empresariais">
+    Faça upload do contrato social usando `POST /sub-accounts/document/company`
+  </Step>
+  <Step title="3. Verificação">
+    Aguarde a verificação automática dos documentos
+  </Step>
+  <Step title="4. Abertura de Conta">
+    Após aprovação, inicie o processo de abertura de conta completa
+  </Step>
+</Steps>
+
+## ⚠️ Observações Importantes
+
+### Documentos Inválidos
+- Documentos ilegíveis ou com baixa qualidade
+- Documentos rasurados ou adulterados
+- Documentos vencidos (para CNH)
+- Selfies com má qualidade ou não atuais
+
+### Tempo de Processamento
+- **Upload**: Imediato após envio
+- **Verificação**: 1-3 dias úteis
+- **Aprovação**: 3-7 dias úteis
+- **Abertura de Conta**: 1-2 dias úteis após aprovação
+
+## 🛠️ Exemplos de Upload
+
+### Upload de RG
+```bash
+# Frente do RG
+curl -X POST http://localhost:3000/sub-accounts/document \
+  -H "api_key: ak_1234567890abcdef" \
+  -H "api_secret: as_1234567890abcdef" \
+  -F "documentType=RG_FRONT" \
+  -F "file=@rg_frente.jpg"
+
+# Verso do RG
+curl -X POST http://localhost:3000/sub-accounts/document \
+  -H "api_key: ak_1234567890abcdef" \
+  -H "api_secret: as_1234567890abcdef" \
+  -F "documentType=RG_BACK" \
+  -F "file=@rg_verso.jpg"
+```
+
+### Upload de Selfie
+```bash
+curl -X POST http://localhost:3000/sub-accounts/document \
+  -H "api_key: ak_1234567890abcdef" \
+  -H "api_secret: as_1234567890abcdef" \
+  -F "documentType=SELFIE" \
+  -F "file=@selfie_socio.jpg"
+```
+
+### Upload de Contrato Social
+```bash
+curl -X POST http://localhost:3000/sub-accounts/document/company \
+  -H "api_key: ak_1234567890abcdef" \
+  -H "api_secret: as_1234567890abcdef" \
+  -F "documentType=SOCIAL_CONTRACT" \
+  -F "file=@contrato_social.pdf"
+```
+
+## 📞 Suporte
+
+Em caso de dúvidas sobre os documentos obrigatórios ou problemas no upload, entre em contato com nosso suporte técnico.

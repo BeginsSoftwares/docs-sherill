@@ -1,0 +1,47 @@
+---
+title: 'Decode QR Code'
+openapi: 'POST /transaction/decode-qrcode'
+---
+
+## Descrição
+Decodifica um QR Code EMV e retorna os dados se o QR estiver ativo. Autenticação via ApiKey.
+
+## Autenticação
+- `api_key` no header
+
+## Corpo da requisição
+```json
+{
+  "emv": "string do QR Code EMV"
+}
+```
+
+## Respostas
+
+### Sucesso (QR ativo)
+```json
+{
+  "status": "success",
+  "qrcode": {
+    "amount": 100.0,
+    "expiresAt": "2025-12-08T20:27:51.580Z",
+    "receiver": {
+      "name": "Blind Pay, Inc.",
+      "city": "Vila Velha",
+      "key": "f0f64d04-1e7d-4e4f-976f-48f4c7e0c225"
+    },
+    "txid": "d192067a12b2e43c38594b22af4128981",
+    "url": "brcode.starkinfra.com/v2/192067a12b2e43c38594b22af4128981"
+  }
+}
+```
+
+### Expirado / inativo
+```json
+{
+  "status": "expired",
+  "message": "qrcode já expirado"
+}
+```
+
+

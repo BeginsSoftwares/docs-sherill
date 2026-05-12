@@ -1,0 +1,69 @@
+---
+title: Banking as a Service (BaaS)
+description: "Documentação completa para integração de clientes que vão usar o BaaS"
+---
+
+## Visão Geral
+
+O Banking as a Service (BaaS) da 3X Pay permite que você crie e gerencie subcontas para seus clientes, oferecendo uma solução completa de banking embarcado em sua aplicação.
+
+<CardGroup cols={2}>
+  <Card
+    title="Subcontas"
+    icon="building"
+    href="/baas/sub-accounts/introduction"
+  >
+    Crie e gerencie subcontas para seus clientes com facilidade
+  </Card>
+  <Card
+    title="Documentação"
+    icon="file-text"
+    href="/baas/sub-accounts/required-documents"
+  >
+    Upload e gestão de documentos pessoais e empresariais
+  </Card>
+</CardGroup>
+
+## Recursos Principais
+
+### 🏢 Gestão de Subcontas
+- Criação automática de subcontas completas
+- Integração direta com processador de pagamentos
+- Normalização automática de dados
+- Geração automática de credenciais de API
+
+### 📄 Gestão de Documentos
+- Upload de documentos pessoais (CPF, RG, etc.)
+- Upload de documentos empresariais (Contrato Social, etc.)
+- Validação automática de formatos
+- Armazenamento seguro na nuvem
+
+### 🔐 Segurança e Autenticação
+- Autenticação via API Key/Secret
+- Isolamento completo entre subcontas
+- Validação rigorosa de dados
+- Senhas geradas automaticamente
+
+## Fluxo de Integração
+
+<Steps>
+  <Step title="Criar Subconta">
+    Use o endpoint `/sub-accounts` para criar uma nova subconta com todas as informações necessárias
+  </Step>
+  <Step title="Upload de Documentos">
+    Faça upload dos documentos pessoais e empresariais usando os endpoints específicos
+  </Step>
+  <Step title="Abrir Conta Completa">
+    Inicie o processo de abertura de conta no processador de pagamentos
+  </Step>
+  <Step title="Monitorar Status">
+    Acompanhe o status da análise através dos webhooks e endpoints de consulta
+  </Step>
+</Steps>
+
+## Benefícios
+
+- **🚀 Implementação Rápida**: APIs simples e bem documentadas
+- **🔒 Segurança Máxima**: Autenticação robusta e isolamento de dados
+- **📈 Escalabilidade**: Suporte a milhares de subcontas simultâneas
+- **📊 Monitoramento**: Webhooks e logs detalhados para acompanhamento

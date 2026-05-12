@@ -1,0 +1,94 @@
+---
+title: 'CashOut'
+openapi: 'POST /transaction/cash-out'
+---
+
+# Cash-out (exposes)
+
+## Autenticação
+- `ApiKeyGuard` + `SignatureGuard`
+- Envie `api_key`, `api_secret` e `signature` nos headers
+
+## Body (CashOutDto)
+```json
+{
+  "transaction": {
+    "amount": 123.45,
+    "key": "chave-pix-ou-qr",
+    "pixType": "CPF|CNPJ|EMAIL|PHONE|RANDOM|QRCODE",
+    "external_id": "id-externo-do-cliente",
+    "callback_url": "https://seu-callback.com/opcional"
+  }
+}
+```
+
+### Regras
+- Para `pixType diferente de QRCODE`: `amount` é obrigatório e > 0.
+- Para `pixType igual a QRCODE`:
+  - `amount` vem do QRCODE, ou seja não precisa ser enviado na requisição.
+  - Se o QR estiver expirado, retorna 400 com `"qrcode já expirado"`.
+
+## Exemplo – Chave Pix comum (CPF)
+```http
+POST /transaction/cash-out
+api_key: SEU_API_KEY
+api_secret: SEU_API_SECRET
+signature: <assinatura>
+Content-Type: application/json
+
+{
+  "transaction": {
+    "amount": 150.00,
+    "key": "12345678901",
+    "pixType": "CPF",
+    "external_id": "order-123",
+    "callback_url": "https://meu-callback.com/cashout"
+  }
+}
+```
+
+### Resposta (sucesso)
+```json
+{
+  "status": "success",
+  "payment": {
+    "status": "pending",
+    "transaction_id": "generated-uuid",
+    "payment_code": null,
+    "link": null,
+    "total": 150
+  }
+}
+```
+
+## Exemplo – Pix via QR Code (EMV completo, sem amount)
+```http
+POST /transaction/cash-out
+api_key: SEU_API_KEY
+api_secret: SEU_API_SECRET
+signature: <assinatura>
+Content-Type: application/json
+
+{
+  "transaction": {
+    "key": "00020126780014br.gov.bcb.pix0136f4c6089a-bfde-4c00-a2d9-9eaa584b02190216CobrancaEstatica5204000053039865406546.285802BR5903Pix6008BRASILIA6229...6304ABCD",
+    "pixType": "QRCODE",
+    "external_id": "order-456",
+    "callback_url": "https://meu-callback.com/cashout"
+  }
+}
+```
+
+### Resposta (sucesso)
+```json
+{
+  "status": "success",
+  "payment": {
+    "status": "pending",
+    "transaction_id": "generated-uuid",
+    "payment_code": null,
+    "link": null,
+    "total": 546.28
+  }
+}
+```
