@@ -1,0 +1,103 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "Starter Kit",
+  "colors": {
+    "primary": "#0D9373",
+    "light": "#07C983",
+    "dark": "#0D9373"
+  },
+  "favicon": "/favicon.svg",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Início",
+            "pages": [
+              "introduction",
+              "authentication",
+              "rsa"
+            ]
+          },
+          {
+            "group": "Banking as a Service (BaaS)",
+            "pages": [
+              "baas/introduction",
+              "baas/sub-accounts/introduction",
+              "baas/sub-accounts/required-documents",
+              "baas/sub-accounts/create",
+              "baas/sub-accounts/document-personal",
+              "baas/sub-accounts/document-company",
+              "baas/sub-accounts/open-account"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "groups": [
+          {
+            "group": "API Documentation",
+            "pages": [
+              "api-reference/introduction"
+            ]
+          },
+          {
+            "group": "Sub-accounts API",
+            "pages": [
+              "api-reference/sub-accounts/create-sub-account",
+              "api-reference/sub-accounts/upload-personal-document",
+              "api-reference/sub-accounts/upload-company-document",
+              "api-reference/sub-accounts/open-full-account",
+              "api-reference/sub-accounts/webhooks"
+            ]
+          },
+          {
+            "group": "Endpoint Examples",
+            "pages": [
+              "api-reference/endpoint/create-cashin",
+              "api-reference/endpoint/create-cashout",
+              "api-reference/endpoint/create-checkout-transparente",
+              "api-reference/endpoint/decode-qrcode",
+              "api-reference/endpoint/create-refund",
+              "api-reference/endpoint/get-transaction",
+              "api-reference/endpoint/get-balance",
+              "api-reference/endpoint/get-receipt"
+            ]
+          },
+          {
+            "group": "MED (Contestação de Devolução)",
+            "pages": [
+              "api-reference/endpoint/med-contest-create",
+              "api-reference/endpoint/med-contest-submit",
+              "api-reference/endpoint/med-contest-list",
+              "api-reference/endpoint/med-contest-detail"
+            ]
+          },
+          {
+            "group": "Webhooks",
+            "pages": [
+              "api-reference/webhook/webhook-cashin",
+              "api-reference/webhook/webhook-cashout",
+              "api-reference/webhook/webhook-refund",
+              "api-reference/webhook/webhook-infraction"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "logo": {
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg"
+  },
+  "navbar": {
+    "primary": {
+      "type": "button",
+      "label": "Dashboard",
+      "href": "https://app.3xpay.co"
+    }
+  }
+}

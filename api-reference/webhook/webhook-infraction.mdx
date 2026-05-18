@@ -37,7 +37,7 @@ O webhook envia um payload JSON contendo os detalhes da infração e da transaç
 - `medStatus` (string): Status do MED. Valores possíveis:
   - `ACKNOWLEDGED`: Quando a solicitação do MED é recebida
   - `CANCELLED`: Quando o MED é cancelado e o valor estornado para conta
-  - `DEBITED`:  Quando a defesa do MED não é aceita e o valor enviado para o cliente.
+  - `DEBITED`: Quando a defesa do MED não é aceita e o valor enviado para o cliente.
 
 ## Resolução da disputa (após envio da defesa)
 
@@ -86,7 +86,7 @@ Implemente lógica de retry para entregas de webhook falhas
 ## O Webhook deve retornar Status Code 200
 
 <Warning>
-  Para que a transação tenha seu fluxo finalizado com Sucesso é de extrema importancia que seja retornado 200 na resposta!
+  Para que a transação tenha seu fluxo finalizado com sucesso é de extrema importância que seja retornado 200 na resposta!
 </Warning>
 
 ## Consulta de Comprovante
