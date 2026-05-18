@@ -4,7 +4,7 @@ description: 'Documentação completa das notificações do webhook para transa�
 icon: 'webhook'
 ---
 
-# Documentação do Webhook de Cash-in
+# Documentação do Webhook de Cash-out
 
 ## Visão Geral
 Nosso sistema de webhook envia notificações em tempo real sobre transações de cash-out. Quando o status de uma transação é alterado, uma requisição POST é enviada para a URL configurada com informações detalhadas da transação.
@@ -112,7 +112,7 @@ Implemente lógica de retry para entregas de webhook falhas
 ## O Webhook deve retornar Status Code 200
 
 <Warning>
-  Para que a transação tenha seu fluxo finalizado com Sucesso é de extrema importancia que seja retornado 200 na resposta!
+  Para que a transação tenha seu fluxo finalizado com sucesso é de extrema importância que seja retornado 200 na resposta!
 </Warning>
 
 
